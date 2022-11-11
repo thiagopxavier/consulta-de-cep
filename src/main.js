@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 import './style.css'
 
 const cep = document.querySelector('#cep');
@@ -20,10 +21,10 @@ async function handleInput() {
     const data = await response.json();
 
     showData(data)
-
-    return data;
   } catch (error) {
-    return error.message;
+    // if(search.length = 9) {
+    //   Swal.fire('Ops', error.message, 'error');
+    // }
   }
 }
 
