@@ -1,4 +1,7 @@
+import './style.css'
+
 const cep = document.querySelector('#cep');
+
 
 const inputs = ['logradouro', 'bairro', 'localidade', 'uf']
 const showData = (result) => {
