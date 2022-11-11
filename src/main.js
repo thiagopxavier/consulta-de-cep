@@ -2,27 +2,31 @@ import './style.css'
 
 const cep = document.querySelector('#cep');
 
-
-const inputs = ['logradouro', 'bairro', 'localidade', 'uf']
-const showData = (result) => {
-  for(const data in result) {
-    if(document.querySelector(`#${data}`)){
-      document.querySelector(`#${data}`).value = result[data]
+const showData = (data) => {
+  for(const indexCEP in data) {
+    if(document.querySelector(`#${indexCEP}`)){
+      document.querySelector(`#${indexCEP}`).value = data[indexCEP]
     }
   }
 }
 
-cep.addEventListener('input', (e) => {  // 'blur'
+cep.addEventListener('input', handleInput);
+
+async function handleInput() {
   let search = cep.value.replace('-', '');
-  const option = {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'default'
+
+  try {
+    const response = await fetch(`https://viacep.com.br/ws/${search}/json/`);
+    const data = await response.json();
+
+    showData(data)
+
+    return data;
+  } catch (error) {
+    return error.message;
   }
+}
 
-  fetch(`https://viacep.com.br/ws/${search}/json/`, option)
-  .then(response => response.json())
-  .then(result => showData(result))
-  .catch(e => console.log('Deu erro' + e.message))
 
-})
+
+
